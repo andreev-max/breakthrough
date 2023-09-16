@@ -1,4 +1,3 @@
-import { type GetServerSidePropsContext } from "next";
 import {
   getServerSession,
   type NextAuthOptions,
@@ -7,8 +6,6 @@ import {
 } from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import GithubProvider from "next-auth/providers/github";
-import CredentialsProvider from "next-auth/providers/credentials";
-import { UpstashRedisAdapter } from "@next-auth/upstash-redis-adapter";
 import { db } from "./db";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 
@@ -117,9 +114,6 @@ export const authOptions: NextAuthOptions = {
     // }),
   ],
 };
-// export const getServerAuthSession = (ctx: {
-//   req: GetServerSidePropsContext["req"];
-//   res: GetServerSidePropsContext["res"];
-// }) => {
-//   return getServerSession(ctx.req, ctx.res, authOptions);
-// };
+export const getServerAuthSession = () => {
+  return getServerSession(authOptions);
+};

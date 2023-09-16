@@ -4,11 +4,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
-import { getServerSession } from "next-auth";
-import { signIn, signOut } from "next-auth/react";
 import { Header } from "@/components/Header";
 import Link from "next/link";
 import { navigationConfig } from "@/lib/routes";
+import { getServerAuthSession } from "@/lib/auth";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +21,7 @@ export default async function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const session = await getServerSession();
+  const session = await getServerAuthSession();
 
   return (
     <html lang="en">
