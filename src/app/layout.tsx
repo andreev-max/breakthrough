@@ -33,16 +33,20 @@ export default async function RootLayout({
       >
         <Providers>
           <header className="flex gap-1 justify-between min-h-[64px] w-full items-center rounded-lg bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
-            <Link href={navigationConfig.home.href}>
-              {navigationConfig.home.title}
-            </Link>
-            <Link href={navigationConfig.sets.href}>
-              {navigationConfig.sets.title}
-            </Link>
-            <ThemeToggle />
-            <Header session={session} />
+            <div className="flex items-center gap-2 ml-2">
+              <Link href={navigationConfig.home.href}>
+                {navigationConfig.home.title}
+              </Link>
+              <Link href={navigationConfig.sets.href}>
+                {navigationConfig.sets.title}
+              </Link>
+            </div>
+            <div className="flex items-center gap-2">
+              <ThemeToggle />
+              <Header session={session} />
+            </div>
           </header>
-          <main className="w-full flex-grow rounded-lg bg-base950 p-2 overflow-auto">
+          <main className="w-full flex-grow rounded-lg bg-base950 px-2 py-4 overflow-auto">
             {children}
           </main>
         </Providers>

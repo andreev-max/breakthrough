@@ -1,6 +1,6 @@
 "use client";
 
-import * as React from "react";
+import { useState, useEffect, FC } from "react";
 import { useTheme } from "next-themes";
 
 import { Button } from "@/components/ui/Button";
@@ -12,28 +12,32 @@ import {
 } from "@/components/ui/DropdownMenu";
 import Icons from "./Icons";
 
-export function ThemeToggle() {
-  const { setTheme, theme, themes, forcedTheme, resolvedTheme, systemTheme } =
-    useTheme();
+export const ThemeToggle: FC = () => {
+  const { setTheme, theme } = useTheme();
+
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  if (!mounted) {
+    return null;
+  }
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
-          <Icons.Sun
-            className={`transition-all hover:text-base500 ${
-              resolvedTheme === "dark"
-                ? "scale-0 -rotate-90"
-                : "rotate-0 scale-100"
-            }`}
-          />
-          <Icons.Moon
-            className={`absolute transition-all hover:text-base500 ${
-              resolvedTheme === "dark"
-                ? "scale-100 rotate-0"
-                : "rotate-90 scale-0"
-            }`}
-          />
+        <Button variant="ghost" size="sm" className="group">
+          {theme === "light" && (
+            <Icons.Sun className="group-hover:text-base900" />
+          )}
+          {theme === "dark" && (
+            <Icons.Moon className="group-hover:text-base900" />
+          )}
+          {theme === "system" && (
+            <Icons.Laptop className="group-hover:text-base900" />
+          )}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>
@@ -53,4 +57,4 @@ export function ThemeToggle() {
       </DropdownMenuContent>
     </DropdownMenu>
   );
-}
+};

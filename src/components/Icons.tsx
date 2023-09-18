@@ -5,6 +5,11 @@ import {
   Sun,
   Laptop,
   Loader2,
+  MoreVertical,
+  PencilLine,
+  Plus,
+  Trash2,
+  XCircle,
 } from "lucide-react";
 
 export const Icons = {
@@ -14,6 +19,11 @@ export const Icons = {
   Moon,
   Laptop,
   Loader2,
+  MoreVertical,
+  PencilLine,
+  Plus,
+  Trash2,
+  XCircle,
 };
 
 export default Icons;
