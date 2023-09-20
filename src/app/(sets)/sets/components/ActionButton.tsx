@@ -13,7 +13,7 @@ import { useModal } from "@/components/ModalContext";
 
 interface ActionButtonProps {
   onEdit: () => void;
-  onDelete: () => void;
+  onDelete: () => Promise<void>;
 }
 
 export const ActionButton: FC<ActionButtonProps> = ({ onEdit, onDelete }) => {

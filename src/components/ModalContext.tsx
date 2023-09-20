@@ -3,7 +3,7 @@ import { ReactNode, createContext, useContext, useState } from "react";
 export interface ModalContentProps {
   title?: string;
   content: ReactNode | string;
-  primaryHandler?: () => void;
+  primaryHandler?: () => Promise<void>;
   secondaryHandler?: () => void;
 }
 
@@ -26,7 +26,7 @@ const ModalContext = createContext<ModalContextProps>({
   modalContent: {
     title: "",
     content: "",
-    primaryHandler: () => {},
+    primaryHandler: () => Promise.resolve(),
     secondaryHandler: () => {},
   },
 });
@@ -40,7 +40,7 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
   const [modalContent, setModalContent] = useState<ModalContentProps>({
     title: "",
     content: "",
-    primaryHandler: () => {},
+    primaryHandler: () => Promise.resolve(),
     secondaryHandler: () => {},
   });
 
@@ -50,7 +50,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
     primaryHandler,
     secondaryHandler,
   }: ModalContentProps) => {
-    setModalContent({ title, content, primaryHandler, secondaryHandler });
+    setModalContent({
+      title,
+      content,
+      primaryHandler,
+      secondaryHandler,
+    });
     setIsModalOpen(true);
   };
 
@@ -60,7 +65,12 @@ export const ModalProvider = ({ children }: { children: ReactNode }) => {
 
   return (
     <ModalContext.Provider
-      value={{ isModalOpen, openModal, closeModal, modalContent }}
+      value={{
+        isModalOpen,
+        openModal,
+        closeModal,
+        modalContent,
+      }}
     >
       {children}
     </ModalContext.Provider>

@@ -27,13 +27,13 @@ export default async function RootLayout({
     <html lang="en">
       <body
         className={cn(
-          "theme-blue flex min-h-screen flex-col items-center gap-2 bg-base800 p-2 antialiased overflow-hidden",
-          inter.className
+          "theme-blue flex h-screen min-h-screen flex-col items-center gap-2 overflow-hidden bg-base800 p-2 antialiased",
+          inter.className,
         )}
       >
         <Providers>
-          <header className="flex gap-1 justify-between min-h-[64px] w-full items-center rounded-lg bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
-            <div className="flex items-center gap-2 ml-2">
+          <header className="flex min-h-[64px] w-full items-center justify-between gap-1 rounded-lg bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
+            <div className="ml-2 flex items-center gap-2">
               <Link href={navigationConfig.home.href}>
                 {navigationConfig.home.title}
               </Link>
@@ -46,7 +46,7 @@ export default async function RootLayout({
               <Header session={session} />
             </div>
           </header>
-          <main className="w-full flex-grow rounded-lg bg-base950 px-2 py-4 overflow-auto">
+          <main className="w-full flex-grow overflow-auto rounded-lg bg-base950 px-3 py-4">
             {children}
           </main>
         </Providers>

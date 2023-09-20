@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
 import { useModal } from "./ModalContext";
 import { Button } from "./ui/Button";
 import Icons from "./Icons";
 
 export const Modal = () => {
+  const [isActionBeingPerformed, setIsActionBeingPerformed] = useState(false);
+
   const { isModalOpen, closeModal, modalContent } = useModal();
 
   if (!isModalOpen) {
@@ -14,7 +16,7 @@ export const Modal = () => {
 
   return (
     <div
-      className="fixed inset-0 z-20 bg-base950/25 backdrop-blur-sm p-5 flex items-center justify-center"
+      className="fixed inset-0 z-20 flex items-center justify-center bg-base950/25 p-5 backdrop-blur-sm"
       onClick={() => {
         console.log("here");
         closeModal();
@@ -24,7 +26,7 @@ export const Modal = () => {
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className="w-full max-w-2xl max-h-full p-2 bg-base950 rounded shadow"
+        className="max-h-full w-full max-w-2xl rounded bg-base950 p-2 shadow"
       >
         <div className="flex items-center justify-between border-b border-base700 pb-2">
           <h3 className="text-2xl font-medium text-base100">{title}</h3>
@@ -34,7 +36,7 @@ export const Modal = () => {
         </div>
         <div className="py-2 text-base200">{content}</div>
         {(primaryHandler || secondaryHandler) && (
-          <div className="py-2 border-t border-base700 flex justify-end items-center gap-3">
+          <div className="flex items-center justify-end gap-3 border-t border-base700 py-2">
             {secondaryHandler && (
               <Button
                 onClick={() => {
@@ -47,8 +49,11 @@ export const Modal = () => {
             )}
             {primaryHandler && (
               <Button
-                onClick={() => {
-                  primaryHandler();
+                isLoading={isActionBeingPerformed}
+                onClick={async () => {
+                  setIsActionBeingPerformed(true);
+                  await primaryHandler();
+                  setIsActionBeingPerformed(false);
                   closeModal();
                 }}
               >

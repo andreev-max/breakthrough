@@ -10,6 +10,7 @@ import {
   Plus,
   Trash2,
   XCircle,
+  CheckCircle,
 } from "lucide-react";
 
 export const Icons = {
@@ -24,6 +25,7 @@ export const Icons = {
   Plus,
   Trash2,
   XCircle,
+  CheckCircle,
 };
 
 export default Icons;
