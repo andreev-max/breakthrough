@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, FormEventHandler, useState } from "react";
+import { FC, FormEventHandler, useRef, useState } from "react";
 import { ActionButton } from "./ActionButton";
 import { formatDistanceToNow } from "date-fns";
 import toast from "react-hot-toast";
@@ -15,6 +15,7 @@ interface SetCardProps {
 }
 
 export const SetCard: FC<SetCardProps> = ({ set }) => {
+  const titleRef = useRef(set.title);
   const queryClient = useQueryClient();
 
   const [isEditingMode, setIsEditingMode] = useState(false);
@@ -44,6 +45,11 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
 
   const updateSetTitle: FormEventHandler<HTMLFormElement> = async (event) => {
     event.preventDefault();
+
+    if (titleRef.current === titleValue) {
+      setIsEditingMode(false);
+      return;
+    }
     try {
       console.log("here");
       console.log(titleValue);
@@ -66,7 +72,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
   return (
     <li
       key={set.id}
-      className="flex flex-col rounded-lg border border-base800 p-2 shadow-lg"
+      className="flex flex-col rounded-lg border border-base200 p-2 shadow-lg"
     >
       <div className="mb-2 flex justify-between">
         <div className="mt-2 flex items-center gap-6">
@@ -78,7 +84,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
                 label="Edit your set title"
               >
                 <Button
-                  className="absolute bottom-0 right-0"
+                  className="absolute bottom-1 right-0"
                   variant="ghost"
                   size="sm"
                   type="submit"
@@ -88,18 +94,31 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
               </Input>
             </form>
           ) : (
-            <h3 className="text-2xl">{set.title}</h3>
+            <h3 className="text-2xl font-semibold">{set.title}</h3>
           )}
         </div>
         <ActionButton onEdit={onEdit} onDelete={onDelete} />
       </div>
-      <p className="mb-5 text-xs">{`Last time updated: ${formatDistanceToNow(
-        new Date(set.updatedAt),
-        { addSuffix: true, includeSeconds: true },
-      )}`}</p>
+      <p className="mb-5 text-xs text-base200">
+        Last time updated:{" "}
+        <span className="text-sm text-base50">
+          {formatDistanceToNow(new Date(set.updatedAt), {
+            addSuffix: true,
+            includeSeconds: true,
+          })}
+        </span>
+      </p>
       <div className="flex items-center justify-between">
-        <p className="text-base">{`Words count: ${set._count.words}`}</p>
-        <Link className="rounded bg-base800 p-1" href={`/sets/${set.id}`}>
+        <p className="text-base font-light text-base200">
+          Words count:{" "}
+          <span className="text-lg font-semibold text-base50">
+            {set._count.words}
+          </span>
+        </p>
+        <Link
+          className="rounded bg-base800 p-1 font-medium text-base100 hover:bg-base600 hover:text-base50"
+          href={`/sets/${set.id}`}
+        >
           Explore More
         </Link>
       </div>

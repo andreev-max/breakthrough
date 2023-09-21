@@ -28,6 +28,11 @@ export default {
         primary800: "rgb(var(--primary-800) / <alpha-value>)",
         primary900: "rgb(var(--primary-900) / <alpha-value>)",
         primary950: "rgb(var(--primary-950) / <alpha-value>)",
+
+        error100: "rgb(var(--error-100) / <alpha-value>)",
+        error200: "rgb(var(--error-200) / <alpha-value>)",
+        error300: "rgb(var(--error-300) / <alpha-value>)",
+        error400: "rgb(var(--error-400) / <alpha-value>)",
       },
     },
   },

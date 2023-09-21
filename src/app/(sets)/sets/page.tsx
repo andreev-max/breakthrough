@@ -8,7 +8,7 @@ export default async function SetsPage() {
 
   return (
     <div className="flex flex-col">
-      <h1 className="mb-4 self-center">My Sets</h1>
+      <h1 className="mb-5 self-center text-2xl font-semibold">My Sets</h1>
       {session?.user.id && (
         <Content initialSets={sets} userId={session.user.id} />
       )}

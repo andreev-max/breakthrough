@@ -15,8 +15,3 @@ export const secondaryThemes = {
 
 export type SecondaryTheme =
   (typeof secondaryThemes)[keyof typeof secondaryThemes];
-
-export interface NavigationConfigItem {
-  href: string;
-  title: string;
-}

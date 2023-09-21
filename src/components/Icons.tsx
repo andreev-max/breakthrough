@@ -11,6 +11,9 @@ import {
   Trash2,
   XCircle,
   CheckCircle,
+  BookMarked,
+  Home,
+  Ban,
 } from "lucide-react";
 
 export const Icons = {
@@ -26,6 +29,9 @@ export const Icons = {
   Trash2,
   XCircle,
   CheckCircle,
+  BookMarked,
+  Home,
+  Ban,
 };
 
 export default Icons;

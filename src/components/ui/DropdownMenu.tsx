@@ -43,9 +43,9 @@ const DropdownMenuSubTrigger = React.forwardRef<
   <SubTrigger
     ref={ref}
     className={cn(
-      "flex cursor-default select-none items-center rounded-sm py-1.5 px-2 text-sm font-medium outline-none focus:bg-slate-100 data-[state=open]:bg-slate-100 dark:focus:bg-slate-700 dark:data-[state=open]:bg-slate-700",
+      "flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm font-medium outline-none focus:bg-slate-100 data-[state=open]:bg-slate-100 dark:focus:bg-slate-700 dark:data-[state=open]:bg-slate-700",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   >
@@ -62,8 +62,8 @@ const DropdownMenuSubContent = React.forwardRef<
   <SubContent
     ref={ref}
     className={cn(
-      "z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-100 bg-white p-1 text-slate-700 shadow-md animate-in slide-in-from-left-1 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400",
-      className
+      "animate-in slide-in-from-left-1 z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-100 bg-white p-1 text-slate-700 shadow-md",
+      className,
     )}
     {...props}
   />
@@ -79,8 +79,8 @@ const DropdownMenuContent = React.forwardRef<
       ref={ref}
       sideOffset={sideOffset}
       className={cn(
-        "z-50 min-w-[8rem] overflow-hidden rounded-md border border-slate-100 bg-white p-1 text-slate-700 shadow-md animate-in data-[side=right]:slide-in-from-left-2 data-[side=left]:slide-in-from-right-2 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 dark:border-slate-800 dark:bg-slate-800 dark:text-slate-400",
-        className
+        "animate-in data-[side=right]:slide-in-from-left-2 data-[side=left]:slide-in-from-right-2 data-[side=bottom]:slide-in-from-top-2 data-[side=top]:slide-in-from-bottom-2 z-50 min-w-[8rem] overflow-hidden rounded-md border border-base100 bg-base800 p-1 text-base100 shadow-md",
+        className,
       )}
       {...props}
     />
@@ -97,9 +97,9 @@ const DropdownMenuItem = React.forwardRef<
   <Item
     ref={ref}
     className={cn(
-      "relative flex cursor-default text-base md:text-sm select-none items-center rounded-sm py-1.5 px-2 font-medium outline-none focus:bg-slate-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-700",
+      "relative flex cursor-pointer select-none items-center rounded-sm px-2 py-1.5 text-base font-medium text-base100 outline-none focus:bg-base600 focus:text-base50 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 md:text-sm",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   />
@@ -114,7 +114,7 @@ const DropdownMenuCheckboxItem = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm font-medium outline-none focus:bg-slate-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-700",
-      className
+      className,
     )}
     checked={checked}
     {...props}
@@ -137,7 +137,7 @@ const DropdownMenuRadioItem = React.forwardRef<
     ref={ref}
     className={cn(
       "relative flex cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm font-medium outline-none focus:bg-slate-100 data-[disabled]:pointer-events-none data-[disabled]:opacity-50 dark:focus:bg-slate-700",
-      className
+      className,
     )}
     {...props}
   >
@@ -162,7 +162,7 @@ const DropdownMenuLabel = React.forwardRef<
     className={cn(
       "px-2 py-1.5 text-sm font-semibold text-slate-900 dark:text-slate-300",
       inset && "pl-8",
-      className
+      className,
     )}
     {...props}
   />
@@ -189,7 +189,7 @@ const DropdownMenuShortcut = ({
     <span
       className={cn(
         "ml-auto text-xs tracking-widest text-slate-500",
-        className
+        className,
       )}
       {...props}
     />

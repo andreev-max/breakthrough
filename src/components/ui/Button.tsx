@@ -4,46 +4,50 @@ import * as React from "react";
 import Icons from "../Icons";
 
 const buttonVariants = cva(
-  "active:scale-95 flex items-center gap-2 justify-center rounded-md text-sm font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-base400 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none",
+  "active:scale-95 flex items-center gap-2 justify-center rounded text-sm font-medium focus:outline-none disabled:opacity-50 disabled:pointer-events-none",
   {
     variants: {
       variant: {
-        default: "bg-base900 text-base100 hover:bg-base800",
-        destructive: "text-base100 hover:bg-red-600",
+        default: "bg-base900 text-base200 hover:text-base50 hover:bg-base700",
+        error:
+          "text-error400 bg-error100 hover:bg-error300 hover:text-white border-error300 border",
+        primary:
+          "text-primary100 bg-primary700 hover:bg-primary600 hover:text-white",
         outline:
-          "bg-slate-900 text-white hover:bg-slate-800 dark:bg-slate-200 dark:text-slate-900 dark:hover:bg-slate-100 border border-slate-200 dark:border-slate-700",
-        subtle:
-          "bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
+          "bg-transparent text-base200 hover:text-base50 hover:border-base50 border border-base300",
         ghost:
-          "bg-transparent hover:bg-base100 data-[state=open]:bg-transparent",
-        link: "bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 hover:bg-transparent",
+          "bg-transparent text-base200 hover:bg-base800 hover:text-base50 data-[state=open]:bg-transparent",
       },
       size: {
-        default: "h-10 py-2 px-4",
-        sm: "h-8 p-1 rounded-md",
-        lg: "h-11 px-8 rounded-md",
+        default: "h-10 py-2 px-3",
+        sm: "h-8 p-1",
+        lg: "h-12 px-5 py-3",
       },
     },
     defaultVariants: {
       variant: "default",
       size: "default",
     },
-  }
+  },
 );
 
 export interface ButtonProps
   extends React.ButtonHTMLAttributes<HTMLButtonElement>,
     VariantProps<typeof buttonVariants> {
   isLoading?: boolean;
+  disabled?: boolean;
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, children, variant, isLoading, size, ...props }, ref) => {
+  (
+    { className, children, variant, isLoading, disabled, size, ...props },
+    ref,
+  ) => {
     return (
       <button
         className={cn(buttonVariants({ variant, size, className }))}
         ref={ref}
-        disabled={isLoading}
+        disabled={isLoading || disabled}
         {...props}
       >
         {isLoading ? (
@@ -52,7 +56,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {children}
       </button>
     );
-  }
+  },
 );
 Button.displayName = "Button";
 

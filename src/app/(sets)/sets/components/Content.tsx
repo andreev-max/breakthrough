@@ -13,6 +13,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { PrismaClient } from "@prisma/client";
 import { useSet } from "@/queries/useSet";
 import { SetCard } from "./SetCard";
+import { NewSetForm } from "./NewSetForm";
 
 interface ContentProps {
   initialSets: SetsWithWordCount;
@@ -50,10 +51,7 @@ export const Content: FC<ContentProps> = ({ initialSets, userId }) => {
 
   return sets && Boolean(sets?.length) ? (
     <>
-      <Button isLoading={isCreating} onClick={createNewSet} className="mb-4">
-        <Icons.Plus />
-        Create New Set
-      </Button>
+      <NewSetForm />
       <ul className="flex flex-col gap-3">
         {sets.map((set) => {
           return <SetCard key={set.id} set={set} />;
@@ -65,10 +63,7 @@ export const Content: FC<ContentProps> = ({ initialSets, userId }) => {
       <h3 className="my-3 self-center text-xl">
         You don&apos;t have any sets for now
       </h3>
-      <Button isLoading={isCreating} onClick={createNewSet}>
-        <Icons.Plus />
-        Create New Set
-      </Button>
+      <NewSetForm />
     </>
   );
 };

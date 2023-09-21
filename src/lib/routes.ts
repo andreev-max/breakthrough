@@ -1,13 +1,15 @@
-import { type NavigationConfigItem } from "./constants";
+import Icons from "@/components/Icons";
 
 export const navigationConfig = {
   home: {
     href: "/",
-    title: "Home",
+    name: "Home",
+    icon: Icons.Home,
   },
   sets: {
     href: "/sets",
-    title: "My Sets",
+    name: "My Sets",
+    icon: Icons.BookMarked,
   },
 } as const;
 

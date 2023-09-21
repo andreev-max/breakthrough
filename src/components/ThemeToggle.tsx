@@ -28,16 +28,10 @@ export const ThemeToggle: FC = () => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="group">
-          {theme === "light" && (
-            <Icons.Sun className="group-hover:text-base900" />
-          )}
-          {theme === "dark" && (
-            <Icons.Moon className="group-hover:text-base900" />
-          )}
-          {theme === "system" && (
-            <Icons.Laptop className="group-hover:text-base900" />
-          )}
+        <Button variant="ghost" size="sm">
+          {theme === "light" && <Icons.Sun />}
+          {theme === "dark" && <Icons.Moon />}
+          {theme === "system" && <Icons.Laptop />}
           <span className="sr-only">Toggle theme</span>
         </Button>
       </DropdownMenuTrigger>

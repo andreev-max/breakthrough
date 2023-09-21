@@ -5,16 +5,16 @@ import { FC } from "react";
 import { Button } from "./ui/Button";
 import { Session } from "next-auth";
 
-interface HeaderProps {
+interface AuthButtonProps {
   session: Session | null;
 }
 
-export const Header: FC<HeaderProps> = ({ session }) => {
+export const AuthButton: FC<AuthButtonProps> = ({ session }) => {
   const isAuthenticated = session?.user;
 
   return (
     <Button
-      variant="subtle"
+      variant="primary"
       onClick={isAuthenticated ? () => void signOut() : () => void signIn()}
     >
       {isAuthenticated ? "Sign Out" : "Sign In"}
