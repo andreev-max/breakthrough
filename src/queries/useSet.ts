@@ -1,21 +1,21 @@
-import { SetsWithWordCount } from "@/db-calls/getSets";
+import { SetWithWords } from "@/db-calls/getSet";
 import { useQuery } from "@tanstack/react-query";
 
-export const useSet = (initialData: SetsWithWordCount) => {
+export const useSet = (initialData: SetWithWords) => {
   const { data, isLoading, isError } = useQuery({
-    queryKey: ["sets"],
+    queryKey: ["set", initialData?.id],
     queryFn: async () => {
-      const res = await fetch("/api/set");
-      const sets: SetsWithWordCount = await res.json();
-      console.log(sets);
-      return sets;
+      const res = await fetch("/api/set?id=" + initialData?.id);
+      const set: SetWithWords = await res.json();
+      console.log(set);
+      return set;
     },
     initialData,
   });
 
   return {
-    sets: data,
-    areSetsLoading: isLoading,
+    set: data,
+    isSetLoading: isLoading,
     isError,
   };
 };

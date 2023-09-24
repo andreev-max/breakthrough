@@ -30,7 +30,7 @@ export const NewSetForm = () => {
 
     try {
       console.log("here");
-      const result = await fetch("/api/set", {
+      const result = await fetch("/api/sets", {
         method: "POST",
         body: JSON.stringify({ title: newSetTitleValue }),
         headers: { "Content-Type": "application/json" },

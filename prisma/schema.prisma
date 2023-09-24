@@ -85,16 +85,16 @@ model Word {
     updatedAt               DateTime    @updatedAt
     term                    String
     translation             String
-    transcription           String
-    definition              String
+    transcription           String?
+    definition              String?
     set                     Set         @relation(fields: [setId], references: [id])
     setId                   String
-    example1                String
-    example1Translation     String
-    example2                String
-    example2Translation     String
-    example3                String
-    example3Translation     String
+    example1                String?
+    example1Translation     String?
+    example2                String?
+    example2Translation     String?
+    example3                String?
+    example3Translation     String?
 
     @@index([setId])
 }

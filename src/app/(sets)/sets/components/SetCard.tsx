@@ -28,7 +28,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
   const onDelete = async () => {
     try {
       console.log("here");
-      const result = await fetch("/api/set", {
+      const result = await fetch("/api/sets", {
         method: "DELETE",
         body: JSON.stringify({ setId: set.id }),
         headers: { "Content-Type": "application/json" },
@@ -54,7 +54,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
       console.log("here");
       console.log(titleValue);
 
-      const result = await fetch("/api/set", {
+      const result = await fetch("/api/sets", {
         method: "PUT",
         body: JSON.stringify({ newTitle: titleValue, setId: set.id }),
         headers: { "Content-Type": "application/json" },
@@ -70,10 +70,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
   };
 
   return (
-    <li
-      key={set.id}
-      className="flex flex-col rounded-lg border border-base200 p-2 shadow-lg"
-    >
+    <li className="flex flex-col rounded border border-base200 p-2 shadow-lg">
       <div className="mb-2 flex justify-between">
         <div className="mt-2 flex items-center gap-6">
           {isEditingMode ? (

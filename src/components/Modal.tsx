@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState } from "react";
 import { useModal } from "./ModalContext";
 import { Button } from "./ui/Button";
@@ -23,10 +25,10 @@ export const Modal = () => {
       }}
     >
       <div
+        className="max-h-full w-full max-w-2xl rounded border border-base50 bg-base950 p-3 shadow"
         onClick={(event) => {
           event.stopPropagation();
         }}
-        className="max-h-full w-full max-w-2xl rounded bg-base950 p-2 shadow"
       >
         <div className="flex items-center justify-between border-b border-base700 pb-2">
           <h3 className="text-2xl font-medium text-base100">{title}</h3>
@@ -49,6 +51,7 @@ export const Modal = () => {
             )}
             {primaryHandler && (
               <Button
+                variant="primary"
                 isLoading={isActionBeingPerformed}
                 onClick={async () => {
                   setIsActionBeingPerformed(true);

@@ -1,23 +1,21 @@
-// import { serverClient } from "~/utils/server-client";
-// import { trpc } from "~/utils/trpc";
+import { getSetWithWords } from "@/db-calls/getSet";
+import { getServerAuthSession } from "@/lib/auth";
+import { Content } from "./components/Content";
 
-// export async function generateStaticParams() {
-//   const sets = ["set-one", "set-two"];
-//   const result = await serverClient.example.getAll();
-//   console.log(result);
-//   return sets.map((set) => {
-//     return {
-//       setId: set,
-//     };
-//   });
-// }
+export default async function SetPage({
+  params,
+}: {
+  params: { setId: string };
+}) {
+  console.log({ params });
 
-export default function SetPage({ params }: { params: { setId: string } }) {
-  console.log(params);
+  const session = await getServerAuthSession();
+  const set = await getSetWithWords(params.setId);
   return (
-    <div>
-      <h1>set page</h1>
-      <p>{params.setId}</p>
-    </div>
+    <section className="flex flex-col">
+      {session?.user.id && (
+        <Content userId={session?.user.id} initialSet={set} />
+      )}
+    </section>
   );
 }
