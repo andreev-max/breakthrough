@@ -2,8 +2,10 @@
 import Icons from "@/components/Icons";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
+import { SetsWithWordCount } from "@/db-calls/getSets";
+import { showToast } from "@/lib/showToast";
 import { useQueryClient } from "@tanstack/react-query";
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import toast from "react-hot-toast";
 
 export const NewSetForm = () => {
@@ -21,7 +23,8 @@ export const NewSetForm = () => {
     setIsInputShown(false);
   };
 
-  const createNewSet = async () => {
+  const createNewSet = async (event: FormEvent) => {
+    event.preventDefault();
     setIsCreating(true);
 
     if (!newSetTitleValue) {
@@ -29,21 +32,28 @@ export const NewSetForm = () => {
     }
 
     try {
-      console.log("here");
-      const result = await fetch("/api/sets", {
+      const result = await fetch("/api/set", {
         method: "POST",
-        body: JSON.stringify({ title: newSetTitleValue }),
+        body: JSON.stringify({ newTitle: newSetTitleValue }),
         headers: { "Content-Type": "application/json" },
       });
-      const result2 = await result.json();
-      console.log({ result, result2 });
+      const createdSet = await result.json();
+      console.log({ result, createdSet });
 
-      queryClient.invalidateQueries({ queryKey: ["sets"] });
+      const staleSets = queryClient.getQueryData<SetsWithWordCount>(["sets"]);
+      queryClient.setQueryData(
+        ["sets"],
+        staleSets ? [createdSet, ...staleSets] : [createdSet],
+      );
+      showToast();
+      // toast(`You have just successfully create a new set: ${createdSet.title}`);
     } catch (e) {
       console.log(e);
       toast("Something went wrong with creating new set");
     } finally {
       setIsCreating(false);
+      hideInput();
+      setNewSetTitleValue("");
     }
   };
 

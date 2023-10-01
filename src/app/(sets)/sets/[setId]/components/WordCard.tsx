@@ -21,7 +21,7 @@ export const SetCard: FC<SetCardProps> = ({ word }) => {
   const onDelete = async () => {
     try {
       console.log("here");
-      const result = await fetch("/api/sets", {
+      const result = await fetch("/api/set", {
         method: "DELETE",
         body: JSON.stringify({ setId: word.id }),
         headers: { "Content-Type": "application/json" },

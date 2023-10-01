@@ -21,10 +21,10 @@ const Providers: FC<ProvidersProps> = ({ children }) => {
       <ThemeProvider defaultTheme="system" enableSystem>
         <SessionProvider>
           <QueryClientProvider client={queryClient}>
-            <ReactQueryDevtools initialIsOpen={false} />
+            {/* <ReactQueryDevtools initialIsOpen={false} /> */}
             <ModalProvider>
               <Modal />
-              <Toaster position="top-center" reverseOrder={false} />
+              <Toaster position="bottom-right" reverseOrder={false} />
               {children}
             </ModalProvider>
           </QueryClientProvider>

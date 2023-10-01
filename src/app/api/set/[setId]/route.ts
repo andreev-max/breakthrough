@@ -1,13 +1,17 @@
+import { getSetWithWords } from "@/db-calls/getSet";
 import { getSetsWithWordCount } from "@/db-calls/getSets";
 import { getServerAuthSession } from "@/lib/auth";
 import { db } from "@/lib/db";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
-export async function POST(req: Request) {
+export async function GET(
+  request: Request,
+  { params }: { params: { setId: string } },
+) {
+  const { setId } = params;
+  console.log({ setId });
   try {
-    const { title } = await req.json();
-    console.log(title);
     const user = await getServerAuthSession().then((res) => res?.user);
 
     if (!user) {
@@ -17,25 +21,14 @@ export async function POST(req: Request) {
       );
     }
 
-    const result = await db.set.create({
-      data: {
-        title: title,
-        userId: user.id,
-      },
-    });
+    if (!setId) {
+      throw new Error();
+    }
 
-    const createdSetForResponse = {
-      title: result.title,
-      updatedAt: result.updatedAt,
-      userId: result.userId,
-      id: result.id,
-      _count: {
-        words: 0,
-      },
-    };
+    const setWithWords = await getSetWithWords(setId);
 
-    console.log("result", result);
-    return NextResponse.json(createdSetForResponse, { status: 201 });
+    console.log("result", setWithWords);
+    return NextResponse.json(setWithWords, { status: 200 });
   } catch (error) {
     if (error instanceof z.ZodError) {
       return NextResponse.json({ error: error.issues }, { status: 400 });
@@ -50,8 +43,14 @@ export async function POST(req: Request) {
   }
 }
 
-export async function GET() {
+export async function PUT(
+  req: Request,
+  { params }: { params: { setId: string } },
+) {
   try {
+    const { setId } = params;
+    const { newTitle } = await req.json();
+    console.log({ newTitle, setId });
     const user = await getServerAuthSession().then((res) => res?.user);
 
     if (!user) {
@@ -61,48 +60,26 @@ export async function GET() {
       );
     }
 
-    const result = await getSetsWithWordCount();
-
-    console.log("result", result);
-    return NextResponse.json(result, { status: 200 });
-  } catch (error) {
-    if (error instanceof z.ZodError) {
-      return NextResponse.json({ error: error.issues }, { status: 400 });
-    }
-
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      {
-        status: 500,
-      },
-    );
-  }
-}
-
-export async function PUT(req: Request) {
-  try {
-    const { newTitle, setId } = await req.json();
-    console.log(newTitle);
-    const user = await getServerAuthSession().then((res) => res?.user);
-
-    if (!user) {
-      return NextResponse.json(
-        { error: "Unauthorized to perform this action." },
-        { status: 401 },
-      );
-    }
-
-    const result = await db.set.update({
+    const { id, title, updatedAt, userId, _count } = await db.set.update({
       where: {
         id: setId,
       },
       data: {
         title: newTitle,
       },
+      select: {
+        title: true,
+        id: true,
+        updatedAt: true,
+        userId: true,
+        _count: { select: { words: true } },
+      },
     });
 
-    console.log("result", result);
-    return NextResponse.json(result, { status: 200 });
+    return NextResponse.json(
+      { id, title, updatedAt, userId, _count },
+      { status: 200 },
+    );
   } catch (error) {
     console.log(error);
     if (error instanceof z.ZodError) {
@@ -118,8 +95,12 @@ export async function PUT(req: Request) {
   }
 }
 
-export async function DELETE(req: Request) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { setId: string } },
+) {
   try {
+    const { setId } = params;
     const user = await getServerAuthSession().then((res) => res?.user);
 
     if (!user) {
@@ -129,7 +110,6 @@ export async function DELETE(req: Request) {
       );
     }
 
-    const { setId } = await req.json();
     //validate
 
     const result = await db.set.delete({

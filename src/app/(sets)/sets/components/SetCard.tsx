@@ -9,6 +9,7 @@ import Link from "next/link";
 import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Icons from "@/components/Icons";
+import { SetsWithWordCount } from "@/db-calls/getSets";
 
 interface SetCardProps {
   set: any;
@@ -28,15 +29,18 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
   const onDelete = async () => {
     try {
       console.log("here");
-      const result = await fetch("/api/sets", {
+      const result = await fetch(`/api/set/${set.id}`, {
         method: "DELETE",
-        body: JSON.stringify({ setId: set.id }),
-        headers: { "Content-Type": "application/json" },
       });
-      const result2 = await result.json();
-      console.log({ result, result2 });
+      const deletedSetId = await result.json();
+      console.log({ result, deletedSetId });
 
-      queryClient.invalidateQueries({ queryKey: ["sets"] });
+      const staleSets = queryClient.getQueryData<SetsWithWordCount>(["sets"]);
+      console.log(staleSets);
+      queryClient.setQueryData(
+        ["sets"],
+        staleSets?.filter(({ id }) => id !== deletedSetId),
+      );
     } catch (e) {
       console.log(e);
       toast("Something went wrong with deleting your set");
@@ -54,18 +58,23 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
       console.log("here");
       console.log(titleValue);
 
-      const result = await fetch("/api/sets", {
+      const result = await fetch(`/api/set/${set.id}`, {
         method: "PUT",
-        body: JSON.stringify({ newTitle: titleValue, setId: set.id }),
+        body: JSON.stringify({ newTitle: titleValue }),
         headers: { "Content-Type": "application/json" },
       });
-      const result2 = await result.json();
-      console.log({ result, result2 });
-      setIsEditingMode(false);
-      queryClient.invalidateQueries({ queryKey: ["sets"] });
+      const updatedSet = await result.json();
+      console.log({ result, updatedSet });
+      const staleSets = queryClient.getQueryData<SetsWithWordCount>(["sets"]);
+      queryClient.setQueryData(
+        ["sets"],
+        staleSets?.map((set) => (set.id === updatedSet.id ? updatedSet : set)),
+      );
     } catch (e) {
       console.log(e);
       toast("Something went wrong with deleting your set");
+    } finally {
+      setIsEditingMode(false);
     }
   };
 

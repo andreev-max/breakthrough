@@ -11,7 +11,7 @@ export async function getSetWithWords(id?: string) {
 
   if (session?.user) {
     return await db.set.findFirst({
-      where: { userId: session?.user.id, id },
+      where: { userId: session.user.id, id },
       select: {
         title: true,
         updatedAt: true,
@@ -21,6 +21,8 @@ export async function getSetWithWords(id?: string) {
       },
     });
   }
+
+  return null;
 }
 
 export type SetWithWords = Prisma.PromiseReturnType<typeof getSetWithWords>;

@@ -5,7 +5,7 @@ export const useSet = (initialData: SetWithWords) => {
   const { data, isLoading, isError } = useQuery({
     queryKey: ["set", initialData?.id],
     queryFn: async () => {
-      const res = await fetch("/api/set?id=" + initialData?.id);
+      const res = await fetch(`/api/set/${initialData?.id}`);
       const set: SetWithWords = await res.json();
       console.log(set);
       return set;
