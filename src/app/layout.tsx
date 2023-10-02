@@ -25,15 +25,15 @@ export default async function RootLayout({ children }: PropsWithChildren) {
     <html lang="en">
       <body
         className={cn(
-          "theme-blue flex h-screen flex-col items-center gap-2 overflow-hidden bg-base800 p-1 antialiased",
+          "theme-blue flex h-screen flex-col items-center gap-2 overflow-hidden bg-base800 px-1 pb-[68px] pt-1 antialiased",
           inter.className,
         )}
       >
         <Providers>
-          <main className="w-full flex-grow overflow-auto rounded-lg bg-base950 px-3 py-4 scrollbar scrollbar-thumb-primary700 scrollbar-thumb-rounded-2xl scrollbar-w-1 scrollbar-h-1 hover:scrollbar-thumb-primary600 focus:ring-offset-2">
+          <main className="w-full grow overflow-auto overscroll-none rounded bg-base950 px-2 py-4 scrollbar scrollbar-thumb-primary700 scrollbar-thumb-rounded-2xl scrollbar-w-1 scrollbar-h-1 hover:scrollbar-thumb-primary600 focus:ring-offset-2">
             {children}
           </main>
-          <header className="flex min-h-[64px] w-full items-center justify-between gap-1 rounded-lg bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
+          <header className="fixed bottom-1 flex min-h-[64px] w-full items-center justify-between gap-1 rounded-lg border-4 border-base800 bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
             <Navigation />
             <div className="flex items-center gap-2">
               <ThemeToggle />

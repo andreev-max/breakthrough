@@ -6,7 +6,6 @@ import { SetsWithWordCount } from "@/db-calls/getSets";
 import { showToast } from "@/lib/showToast";
 import { useQueryClient } from "@tanstack/react-query";
 import { FormEvent, useState } from "react";
-import toast from "react-hot-toast";
 
 export const NewSetForm = () => {
   const queryClient = useQueryClient();
@@ -45,11 +44,14 @@ export const NewSetForm = () => {
         ["sets"],
         staleSets ? [createdSet, ...staleSets] : [createdSet],
       );
-      showToast();
-      // toast(`You have just successfully create a new set: ${createdSet.title}`);
+      showToast(
+        <p>
+          <b>{createdSet.title}</b> has been created
+        </p>,
+      );
     } catch (e) {
       console.log(e);
-      toast("Something went wrong with creating new set");
+      showToast("Something went wrong with creating new set", "error");
     } finally {
       setIsCreating(false);
       hideInput();
@@ -66,7 +68,6 @@ export const NewSetForm = () => {
         wrapperClassName={isInputShown ? "flex" : "hidden"}
       >
         <Button
-          className="absolute bottom-1 right-9"
           variant="ghost"
           size="sm"
           onClick={hideInput}
@@ -74,13 +75,7 @@ export const NewSetForm = () => {
         >
           <Icons.Ban />
         </Button>
-        <Button
-          className="absolute bottom-1 right-0"
-          variant="ghost"
-          size="sm"
-          type="submit"
-          disabled={isCreating}
-        >
+        <Button variant="ghost" size="sm" type="submit" disabled={isCreating}>
           <Icons.CheckCircle />
         </Button>
       </Input>

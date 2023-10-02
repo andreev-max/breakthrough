@@ -8,8 +8,6 @@ export default async function SetPage({
 }: {
   params: { setId: string };
 }) {
-  console.log({ params });
-
   const session = await getServerAuthSession();
 
   if (!session?.user.id) {

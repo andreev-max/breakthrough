@@ -20,12 +20,12 @@ export const Input: FC<PropsWithChildren<InputProps>> = ({
   wrapperClassName,
 }) => {
   return (
-    <div className={cn("relative z-0 flex w-full", wrapperClassName)}>
+    <div className={cn("relative z-0 flex w-full items-end", wrapperClassName)}>
       <input
         type="text"
         name={inputValue}
         id={inputValue}
-        className="peer z-0 mt-2 block w-full appearance-none  border-0 border-b-2 border-primary400 bg-transparent px-0 py-1 text-lg text-base50 focus:mt-2 focus:border-primary600 focus:outline-none focus:ring-0"
+        className="peer z-0 mt-2 block w-full appearance-none border-0 border-b-2 border-primary400 bg-transparent px-0 py-1 text-lg text-base50 focus:mt-2 focus:border-primary600 focus:outline-none focus:ring-0"
         placeholder={placeholder}
         value={inputValue}
         onChange={(event) => setInputValue(event.target.value)}

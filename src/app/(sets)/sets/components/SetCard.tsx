@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import Icons from "@/components/Icons";
 import { SetsWithWordCount } from "@/db-calls/getSets";
+import { showToast } from "@/lib/showToast";
 
 interface SetCardProps {
   set: any;
@@ -41,9 +42,14 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
         ["sets"],
         staleSets?.filter(({ id }) => id !== deletedSetId),
       );
+      showToast(
+        <p>
+          <b>{set.title}</b> has been deleted
+        </p>,
+      );
     } catch (e) {
       console.log(e);
-      toast("Something went wrong with deleting your set");
+      showToast("Something went wrong with deleting your set", "error");
     }
   };
 
@@ -70,9 +76,14 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
         ["sets"],
         staleSets?.map((set) => (set.id === updatedSet.id ? updatedSet : set)),
       );
+      showToast(
+        <p>
+          <b>{set.title}</b> has been updated
+        </p>,
+      );
     } catch (e) {
       console.log(e);
-      toast("Something went wrong with deleting your set");
+      showToast("Something went wrong with updating your set", "error");
     } finally {
       setIsEditingMode(false);
     }
@@ -81,7 +92,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
   return (
     <li className="flex flex-col rounded border border-base200 p-2 shadow-lg">
       <div className="mb-2 flex justify-between">
-        <div className="mt-2 flex items-center gap-6">
+        <div className="mt-2 flex items-center gap-6 overflow-hidden">
           {isEditingMode ? (
             <form onSubmit={updateSetTitle}>
               <Input
@@ -89,18 +100,13 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
                 setInputValue={setTitleValue}
                 label="Edit your set title"
               >
-                <Button
-                  className="absolute bottom-1 right-0"
-                  variant="ghost"
-                  size="sm"
-                  type="submit"
-                >
+                <Button variant="ghost" size="sm" type="submit">
                   <Icons.CheckCircle />
                 </Button>
               </Input>
             </form>
           ) : (
-            <h3 className="text-2xl font-semibold">{set.title}</h3>
+            <h3 className="truncate text-2xl font-semibold">{set.title}</h3>
           )}
         </div>
         <ActionButton onEdit={onEdit} onDelete={onDelete} />
@@ -118,7 +124,7 @@ export const SetCard: FC<SetCardProps> = ({ set }) => {
         <p className="text-base font-light text-base200">
           Words count:{" "}
           <span className="text-lg font-semibold text-base50">
-            {set._count.words}
+            {set._count?.words}
           </span>
         </p>
         <Link
