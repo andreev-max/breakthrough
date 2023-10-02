@@ -23,23 +23,25 @@ export default async function RootLayout({ children }: PropsWithChildren) {
 
   return (
     <html lang="en">
-      <body
-        className={cn(
-          "theme-blue flex h-screen flex-col items-center gap-2 overflow-hidden bg-base800 px-1 pb-[68px] pt-1 antialiased",
-          inter.className,
-        )}
-      >
+      <body>
         <Providers>
-          <main className="w-full grow overflow-auto overscroll-none rounded bg-base950 px-2 py-4 scrollbar scrollbar-thumb-primary700 scrollbar-thumb-rounded-2xl scrollbar-w-1 scrollbar-h-1 hover:scrollbar-thumb-primary600 focus:ring-offset-2">
-            {children}
+          <main
+            className={cn(
+              "theme-blue flex h-screen flex-col items-center gap-2 overflow-hidden bg-base800 px-1 pb-16 pt-1 antialiased",
+              inter.className,
+            )}
+          >
+            <section className="w-full grow overflow-auto overscroll-none rounded bg-base950 px-2 py-4 scrollbar scrollbar-thumb-primary700 scrollbar-thumb-rounded-2xl scrollbar-w-1 scrollbar-h-1 hover:scrollbar-thumb-primary600 focus:ring-offset-2">
+              {children}
+            </section>
+            <header className="fixed bottom-0 flex min-h-[64px] w-full items-center justify-between gap-1 rounded-lg border-4 border-base800 bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
+              <Navigation />
+              <div className="flex items-center gap-2">
+                <ThemeToggle />
+                <AuthButton session={session} />
+              </div>
+            </header>
           </main>
-          <header className="fixed bottom-1 flex min-h-[64px] w-full items-center justify-between gap-1 rounded-lg border-4 border-base800 bg-base950 px-2 py-1 sm:h-20 sm:px-4 sm:py-2">
-            <Navigation />
-            <div className="flex items-center gap-2">
-              <ThemeToggle />
-              <AuthButton session={session} />
-            </div>
-          </header>
         </Providers>
       </body>
     </html>
